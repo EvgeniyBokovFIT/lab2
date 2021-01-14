@@ -360,8 +360,6 @@ void WorkflowParser::Execute(string WorkflowFileName, string InputFileName, stri
 
     Workflow >> BlockName;
 
-    vector<int> Ids;
-
     while (BlockName != "csed")
     {
         if (Workflow.eof())
@@ -370,8 +368,6 @@ void WorkflowParser::Execute(string WorkflowFileName, string InputFileName, stri
         }
 
         index = stoi(BlockName);
-
-        Ids.push_back(index);
 
         if (blocks.find(index) != blocks.end())
         {
@@ -419,17 +415,8 @@ void WorkflowParser::Execute(string WorkflowFileName, string InputFileName, stri
     }
 
     for (auto i : queue)
-    {
-        bool idExists = false;
-        for (size_t j = 0; j < Ids.size(); j++)
-        {
-            if (i == Ids[j])
-            {
-                idExists = true;
-                break;
-            }
-        }
-        if (idExists == false)
+    {       
+        if (blocks.find(i) == blocks.end())
         {
             string id = to_string(i);
             throw("id " + id + " doesn't exists in blocks description");
