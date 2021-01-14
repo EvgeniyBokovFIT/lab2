@@ -415,13 +415,14 @@ void WorkflowParser::Execute(string WorkflowFileName, string InputFileName, stri
     }
 
     for (auto i : queue)
-    {       
-        if (blocks.find(i) == blocks.end())
+    { 
+        auto It = blocks.find(i);
+        if (It == blocks.end())
         {
             string id = to_string(i);
             throw("id " + id + " doesn't exists in blocks description");
         }
-        blocks[i]->doWork(Text);     
+        It->second->doWork(Text);
     }
     if (hasCommandLineOutput)
     {
